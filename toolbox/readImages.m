@@ -91,8 +91,7 @@ for im = 1:nim
     elseif cs == 2  % cielab
 	% start updates from shawn schwartz %
         % adding extension here to handle grayscale images that don't have 3 channels %
-        % stacking the same channel on top of itself 3 times to perform downstream color channel coversio
-ns %
+        % stacking the same channel on top of itself 3 times to perform downstream color channel coversions %
         im1_dim = size(im1); % get the dimensions of the current image
         if length(im1_dim) < 3 % if there isn't a 3rd dimension
             im1 = cat(3, im1, im1, im1); % stack it and rewrite over the raw read in of the image
