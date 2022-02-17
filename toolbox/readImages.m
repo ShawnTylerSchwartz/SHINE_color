@@ -72,6 +72,15 @@ for im = 1:nim
     info = imfinfo(fullfile(pathname,all_images(im).name));
    
     if cs == 1 % hsv
+	% start updates from shawn schwartz %
+	% adding extension here to handle grayscale images that don't have 3 channels %
+	% stacking the same channel on top of itself 3 times to perform downstream color channel coversions %	
+	im1_dim = size(im1); % get the dimensions of the current image
+        if length(im1_dim) < 3 % if there isn't a 3rd dimension
+            im1 = cat(3, im1, im1, im1); % stack it and rewrite over the raw read in of the image
+        end
+	% end updates from shawn schwartz %
+
         hsv = rgb2hsv(im1); % SHINE_color: converting from rgb to hsv
         hue = hsv(:,:,1); % SHINE_color: extracting hue channel
         sat = hsv(:,:,2); % SHINE_color: extracting saturation channel
@@ -80,6 +89,16 @@ for im = 1:nim
         channel2{im} = sat; % stores saturation
     
     elseif cs == 2  % cielab
+	% start updates from shawn schwartz %
+        % adding extension here to handle grayscale images that don't have 3 channels %
+        % stacking the same channel on top of itself 3 times to perform downstream color channel coversio
+ns %
+        im1_dim = size(im1); % get the dimensions of the current image
+        if length(im1_dim) < 3 % if there isn't a 3rd dimension
+            im1 = cat(3, im1, im1, im1); % stack it and rewrite over the raw read in of the image
+        end
+        % end updates from shawn schwartz %
+
         lab = rgb2lab(im1); % converts rgb to cielab
         a = lab(:,:,2);
         b = lab(:,:,3);
